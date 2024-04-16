@@ -1,0 +1,31 @@
+# Classification of Breast_Cancer Dataset
+
+from sklearn.datasets import load_breast_cancer
+from sklearn.metrics import classification_report
+
+df = load_breast_cancer()
+list(df)
+print(df)
+label_names = df['target_names']
+print(label_names)
+labels = df['target']
+print(labels)
+feature_names = df['feature_names']
+print(feature_names)
+features = df['data']
+print(features)
+print(feature_names[0]) # column 0
+print(features[0])  # raw zero
+print(labels[0]) # result of raw zero
+
+''' Spilttind data to train 70% and test 30%'''
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(features,labels,test_size = 0.30, random_state = 1)
+
+from xgboost import XGBClassifier
+classifier = XGBClassifier(objective='binary:logistic', njobs= -1)
+classifier.fit(X_train, y_train)
+y_pred = classifier.predict(X_test)
+accuracy = classifier.score(X_test, y_test)
+print("Accuracy = %.2f%%" % (accuracy * 100.0))
+print(classification_report(y_test, y_pred))

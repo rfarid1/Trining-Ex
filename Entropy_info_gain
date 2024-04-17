@@ -1,0 +1,46 @@
+# Entropy & information gain
+before= np.array([1,1,1,1,1,0,0,0,0,0]) 
+part1= np.array(before[:5])
+part2=np.array(before[5:])
+print(part1)
+print(part2)
+n1 = np.bincount(before) 
+print(n1)
+pb = n1/ len(before) 
+
+entropy_before= 0
+for p1 in pb: 
+    if p1 > 0:
+        entropy_before +=  -(p1 * math.log(p1, 2))
+print( entropy_before)  
+
+part3= np.array(before[:6]) # خمسة ازرق وواحد اخضر
+part4=np.array(before[6:])# 4 ازرق
+print(len(part3))
+print(len(part4))
+n3 = np.bincount(part3)
+print(n3)
+p_part3= n3/len(part3)
+print(p_part3)
+n4 = np.bincount(part4)
+print(n4)
+p_part4= n4/len(part4)
+print(p_part4)
+#con = np.append(p_part3, p_part4)
+
+entropy_part3= 0
+for p3 in p_part3: 
+    if p3 > 0:
+        entropy_part3 += -(p3 * math.log(p3, 2))
+print(entropy_part3)
+
+entropy_part4= 0
+for p4 in p_part4: 
+    if p4 > 0:
+        entropy_part4 += -(p4 *  math.log(p4, 2))
+print(entropy_part4)
+Esplit = (len(part3)/len(before) *  entropy_part3 )+  (len(part4)/len(before) *  entropy_part4)
+
+Info_Gain = entropy_before - Esplit
+print(Info_Gain)
+
